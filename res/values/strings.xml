@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">Bluetooth GUI</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_bluetooth__gui">Bluetooth GUI</string>
+	<string name="collect_data">Collect</string>
+    <string name="save_data">Save</string>
+    <string name="share_data">Share</string>
+    <string name="plot_data">Plot</string>
+    <string name="statistics_log">Statistics</string>
+    
+</resources>
