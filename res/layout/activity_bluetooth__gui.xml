@@ -1,33 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >   
-    
-    
-    <Button 	
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal"
-        android:text="@string/collect_data" />
-    
-     <Button 	
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/save_data" />
-     
-	<Button 	
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/share_data" />
-         
-	<Button 	
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/plot_data" />
+    android:orientation="horizontal" >
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/collect_data"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/share_data"
+        android:textSize="28sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/button1"
+        android:text="@string/save_data"
+        android:textSize="28sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/button1"
+        android:text="@string/plot_data"
+        android:textSize="28sp" />
+
+</RelativeLayout>
