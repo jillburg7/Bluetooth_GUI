@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom" >
+    	<menu>
+    	    <item android:id="@+id/freq_settings"
+        	android:title="@string/freq_settings" />   	  
+    	</menu>
+	</item>
+	<item android:id="@+id/connect_settings"
+	    android:title="@string/connect_settings"
+	    android:showAsAction="ifRoom" >
+    	<menu>
+    	    <item android:id="@+id/device_search"
+    	        android:title="@string/device_search" />
+    	    <item android:id="@+id/device_pair"
+    	        android:title="@string/device_pair" />
+    	    <item android:id="@+id/device_connect"
+    	        android:title="@string/device_connect" />
+    	</menu>
+	</item>
+</menu>
