@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="save_file_format">
-        <item>Text (.txt)</item>
-        <item>Binary</item>
-        <item>Compressed (.zip)</item>
-        <item>MatLab (.may)</item>
-    </string-array>
-</resources>

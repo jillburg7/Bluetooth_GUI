@@ -3,5 +3,5 @@
     <string name="text_file">Text (.txt)</string>
     <string name="binary_file">Binary</string>
     <string name="compressed_file">Compressed (.zip)</string>
-    <string name="matlab_file">Matlab (.may)</string>
+    <string name="matlab_file">Matlab (.mat)</string>
 </resources>
