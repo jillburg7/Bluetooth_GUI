@@ -1,6 +1,9 @@
 package appliedradar.bluetooth.gui;
 
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -13,6 +16,8 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +25,6 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 
 
 public class Bluetooth_GUI extends Activity implements OnMenuItemClickListener {
@@ -34,14 +38,21 @@ public class Bluetooth_GUI extends Activity implements OnMenuItemClickListener {
         setContentView(R.layout.main);
         if(mChartView == null) {
         	RelativeLayout layout = (RelativeLayout) findViewById(R.id.chart);
-        	mChartView = ChartFactory.getLineChartView(this, getMyData(),getMyRenderer());
+        	mChartView = ChartFactory.getLineChartView(this, getMyData(), getMyRenderer());
         	layout.addView(mChartView);
         }
         else {
         	mChartView.repaint();	// use this whenever data has changed and you want to redraw
         }
     }
-    
+	
+
+//	@Override
+//	protected void onStart() {
+//	
+//	}
+
+
     @Override
     protected void onResume() {
     	super.onResume();
@@ -71,25 +82,60 @@ public class Bluetooth_GUI extends Activity implements OnMenuItemClickListener {
   		PopupMenu popup = new PopupMenu(this, view);
   		popup.setOnMenuItemClickListener(this);
   		popup.inflate(R.menu.plotting_menu);
-//  	MenuInflater inflater = getMenuInflater();
-//  	inflater.inflate(R.menu.plotting_menu, popup.getMenu());
   		popup.show();
   	}
 
   	// Saving pop-up menu
   	public void saveMenu(View display) {
+  		
   		PopupMenu popup2 = new PopupMenu(this, display);
   		popup2.setOnMenuItemClickListener(this);
   		popup2.inflate(R.menu.saving_menu);
   		popup2.show();
   	}
+//  		boolean checked = this.isChecked(); 
+//  		switch (display.getId()) {
+//  			case R.id.text_file:
+//  				if (checked)
+//				break;
+//  			case R.id.binary_file:
+//  				if (checked)
+//				break;
+//  			case R.id.compressed_file:
+//  				if (checked)
+//				break;
+//  			case R.id.matlab_file:
+//  				if (checked)
+//				break;
+//  		}
+  	
+  	
+/*  	public void onRadioButtonClicked(View view) {
+  	    // Is the button now checked?
+  	    boolean checked = ((MenuItem) view).isChecked();
+  	    
+  	    // Check which radio button was clicked
+  	    switch(view.getId()) {
+  	        case R.id.text_file:
+  	            if (checked)
+  	                // do something
+  	            break;
+  	        case R.id.binary_file:
+  	            if (checked)
+  	                // do something
+  	            break;
+  	    }
+  	}*/
 
   	// For testing button & popup menu purposes only!
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
         	case R.id.text_file:
-                Toast.makeText(this, "Selected Text File", Toast.LENGTH_SHORT).show();
-                break;
+        		//if (item.isChecked()) item.setChecked(false);
+        		//else item.setChecked(true);
+        		//return true;
+                //Toast.makeText(this, "Selected Text File", Toast.LENGTH_SHORT).show();
+                //break;
             case R.id.binary_file:
                 Toast.makeText(this, "Selected Binary File", Toast.LENGTH_SHORT).show();
                 break;
@@ -118,45 +164,38 @@ public class Bluetooth_GUI extends Activity implements OnMenuItemClickListener {
         return false;
     }
 
+    
+    
     public XYMultipleSeriesDataset getMyData() {
     	XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
+
+    	
     	XYSeries dataSeries = new XYSeries("FMCW Radar- Simulated Data");
-    		dataSeries.add(1, 8190);
-    		dataSeries.add(2, 7615);
-    		dataSeries.add(3, 5969);
-    		dataSeries.add(4, 3483);
-    		dataSeries.add(5, 505);
-    		dataSeries.add(6, -2544);
-    		dataSeries.add(7, -5236);
-    		dataSeries.add(8, -7190);
-    		dataSeries.add(9, -8130);
-    		dataSeries.add(10, -7921);
-    		dataSeries.add(11, -6593);
-    		dataSeries.add(12, -4331);
-    		dataSeries.add(13, -1456);
-    		dataSeries.add(14, 1627);
-    		dataSeries.add(15, 4480);
-    		dataSeries.add(16, 6699);
-    		dataSeries.add(17, 7967);
-    		dataSeries.add(18, 8104);
-    		dataSeries.add(19, 7088);
-    		dataSeries.add(20, 5064);
-    		dataSeries.add(21, 2318);
-    		dataSeries.add(22, -759);
-    		dataSeries.add(23, -3729);
-    		dataSeries.add(24, -6168);
-    		dataSeries.add(25, -7727);
-    		myData.addSeries(dataSeries);
-    		
-//    		XYSeries dataSeries2 = new XYSeries("data2");
-//    		dataSeries2.add(0,1);
-//    		dataSeries2.add(1,1);
-//    		dataSeries2.add(2,2);
-//    		dataSeries2.add(3,1);
-//    		dataSeries2.add(4,2);
-//    		dataSeries2.add(5,4);
-//    		myData.addSeries(dataSeries2);
-    		return myData;
+    	 
+    	//Find the directory for the SD Card using the API
+    	File sdcard = Environment.getExternalStorageDirectory();
+    	
+    	//Get the text file
+    	File file = new File(sdcard,"simuData2.txt");
+ 	
+    	try {
+    		BufferedReader br = new BufferedReader(new FileReader(file));
+    	    String line;
+    	    int x=0;
+    	    
+    	    while ((line = br.readLine()) != null & (x !=8000)) { 	    	
+    	    	x = x+1;
+    	    	int y = Integer.parseInt(line);
+    	    	dataSeries.add(x, y);
+    	    }
+    	    br.close();
+    	}
+    	catch (IOException e) {
+    		Log.e("MainActivity", "IOError");	//You'll need to add proper error handling here
+    	}
+    	myData.addSeries(dataSeries);
+    	
+		return myData;
     }
     
     public XYMultipleSeriesRenderer getMyRenderer() {
@@ -175,18 +214,27 @@ public class Bluetooth_GUI extends Activity implements OnMenuItemClickListener {
     	
     	XYMultipleSeriesRenderer myRenderer = new XYMultipleSeriesRenderer();
     	myRenderer.addSeriesRenderer(r);
-		myRenderer.setPanEnabled(true, false);
-    	
+		myRenderer.setPanEnabled(true, true);
+		myRenderer.setZoomEnabled(true, false);
+		myRenderer.setZoomButtonsVisible(true);
+		
+		
     	String title = "FMCW Radar Data Plot";
     	myRenderer.setChartTitle(title);
     	int textSize = 24;
 		myRenderer.setChartTitleTextSize(textSize);
 		
+		myRenderer.setZoomRate(10);
+		
 		myRenderer.setAxesColor(Color.BLACK);
+		myRenderer.getXLabelsAlign();
 		myRenderer.setXLabelsColor(Color.BLACK);
 		myRenderer.setYLabelsColor(0, Color.BLACK);
 		myRenderer.setShowAxes(true);
 		myRenderer.setLabelsColor(Color.BLACK);
+		
+		myRenderer.setXTitle("Samples");
+		myRenderer.setYTitle("Frequency");
 
 		// background color of the PLOT ONLY
 		myRenderer.setApplyBackgroundColor(true);
@@ -196,24 +244,17 @@ public class Bluetooth_GUI extends Activity implements OnMenuItemClickListener {
 		myRenderer.setMarginsColor(Color.WHITE); 	//sets the background area of the object itself
 													//does not change the plots background
 					
-		myRenderer.setGridColor(Color.BLACK);
+		myRenderer.setGridColor(Color.DKGRAY);
+		myRenderer.setXLabels(20);
+		myRenderer.setYLabels(9);
 		myRenderer.setShowGrid(true);
-    	
-//    	XYSeriesRenderer r2 = new XYSeriesRenderer();
-//    	r2.setColor(Color.RED);
-//    	r2.setLineWidth(10);
-//    	r2.setPointStyle(PointStyle.DIAMOND);
-//    	r2.setFillPoints(true);
-//    	r2.setFillBelowLine(false);
-//    	myRenderer.addSeriesRenderer(r2);
     	return myRenderer;
-
-    	}
-	
-
-
+	}
+}   
+    
+    
   
-}
+
 
 
   
