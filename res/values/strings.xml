@@ -2,7 +2,7 @@
 
     <string name="app_name">Bluetooth GUI</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_bluetooth__gui">Applied Radar, Inc. FMCW Radar Kit</string>
+    <string name="title_main_activity">Applied Radar, Inc. FMCW Radar Kit</string>
     
 
     

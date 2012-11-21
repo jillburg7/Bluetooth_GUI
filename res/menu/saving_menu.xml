@@ -6,20 +6,19 @@
         
         <item
         	android:id="@+id/text_file"
-            android:title="@string/text_file"
-            android:onClick="onRadioButtonClick" />
-          <!-- android:onClick="onMenuItemClickListener" -->
+            android:title="@string/text_file"  />
+          <!-- android:onClick="onRadioButtonClick" -->
         <item
         	android:id="@+id/binary_file"
-            android:title="@string/binary_file"
-            android:onClick="onRadioButtonClick" />
+            android:title="@string/binary_file" />
+            <!--android:onClick="onMenuItemClickListener" -->
         <item
         	android:id="@+id/compressed_file"
-            android:title="@string/compressed_file"
-            android:onClick="onRadioButtonClick" />
+            android:title="@string/compressed_file" />
+            <!-- android:onClick="onMenuItemClickListener" /> -->
         <item
         	android:id="@+id/matlab_file"
-            android:title="@string/matlab_file"
-            android:onClick="onRadioButtonClick" />
+            android:title="@string/matlab_file" />
+            <!-- android:onClick="onMenuItemClickListener" /> -->
 	</group>
 </menu>
