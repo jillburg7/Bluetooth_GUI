@@ -14,6 +14,7 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,12 +25,15 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
 
+	private ShareActionProvider mShareActionProvider;
 	private GraphicalView mChartView;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,23 +65,48 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	// Action Bar displays options when Menu item in Action bar is clicked
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.settings_menu, menu);
-		return true;
-	}
+		getMenuInflater().inflate(R.menu.main_menu, menu);
 
+	    // Locate MenuItem with ShareActionProvider
+	    MenuItem item = menu.findItem(R.id.menu_item_share);
+
+	    // Fetch and store ShareActionProvider
+	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+
+	    // Return true to display menu
+	    return true;
+	}
+	
+	public void doShare(View viewopts) {
+		Intent shareIntent = new Intent();
+		shareIntent.setAction(Intent.ACTION_SEND);
+	//	shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+		shareIntent.setType("image/jpeg");
+		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+	}
+	
+	// Call to update the share intent
+	private void setShareIntent(Intent shareIntent) {
+	    if (mShareActionProvider != null) {
+	        mShareActionProvider.setShareIntent(shareIntent);
+	    }
+	}
+	
 	public void sendCollectSignal(View toast) {
 		Toast.makeText(this, "Selected Collect Data", Toast.LENGTH_SHORT)
 				.show();
 	}
 
-	public void openArchive(View toast2) {
+	public void openArchive(View newActivity) {
 		Toast.makeText(this, "Selected Load Data", Toast.LENGTH_SHORT).show();
+		Intent archiveData = new Intent(this, DisplayArchive.class);
+		startActivity(archiveData);
 	}
 
 	// Plotting pop-up menu
 	public void plotMenu(View view) {
 		PopupMenu popup = new PopupMenu(this, view);
-	//	popup.setOnMenuItemClickListener(this);
+		popup.setOnMenuItemClickListener(this);
 		popup.inflate(R.menu.plotting_menu);
 		popup.show();
 	}
@@ -95,110 +124,84 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.text_file:
-	        	if (item.isChecked()) item.setChecked(false);
-	            else item.setChecked(true);
+	        	if (item.isChecked()) {
+	        		//item.setChecked(false);
+	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
+	            else {
+	            	item.setChecked(true);
+	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
 	            return true;
 	        case R.id.binary_file:
-	            if (item.isChecked()) item.setChecked(false);
-	            else item.setChecked(true);
+	            if (item.isChecked()) {
+	        		item.setChecked(false);
+	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
+	            else {
+	            	item.setChecked(true);
+	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
 	            return true;
 	        case R.id.compressed_file:
-	            if (item.isChecked()) item.setChecked(false);
-	            else item.setChecked(true);
+	            if (item.isChecked()) {
+	        		item.setChecked(false);
+	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
+	            else {
+	            	item.setChecked(true);
+	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
 	            return true;
 	        case R.id.matlab_file:
-	            if (item.isChecked()) item.setChecked(false);
-	            else item.setChecked(true);
+	            if (item.isChecked()) {
+	        		item.setChecked(false);
+	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
+	            else {
+	            	item.setChecked(true);
+	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-	
-/*	public void onRadioButtonClicked(View view) {
-	    // Is the button now checked?
-	    boolean checked = ((RadioButton) view).isChecked();
-	    
-	    // Check which radio button was clicked
-	    switch(view.getId()) {
-	        case R.id.text.file:
-	            if (checked)
-	                // Pirates are the best
-	            break;
-	        case R.id.binary_file:
-	            if (checked)
-	                // Ninjas rule
-	            break;
-	    }
-	}*/
-	
-	
-/*	 boolean checked = this.isChecked();
-	 switch (display.getId()) {
-	 case R.id.text_file:
-	 if (checked)
-	 break;
-	 case R.id.binary_file:
-	 if (checked)
-	 break;
-	 case R.id.compressed_file:
-	 if (checked)
-	 break;
-	 case R.id.matlab_file:
-	 if (checked)
-	 break;
-	 }*/
-
-	/*
-	 * public void onRadioButtonClicked(View view) { // Is the button now
-	 * checked? boolean checked = ((MenuItem) view).isChecked();
-	 * 
-	 * // Check which radio button was clicked switch(view.getId()) { case
-	 * R.id.text_file: if (checked) // do something break; case
-	 * R.id.binary_file: if (checked) // do something break; } }
-	 */
+	 
 
 	// For testing button & popup menu purposes only!
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.text_file:
-			// if (item.isChecked()) item.setChecked(false);
-			// else item.setChecked(true);
-			// return true;
-			Toast.makeText(this, "Selected Text File", Toast.LENGTH_SHORT).show();
-			break;
-		case R.id.binary_file:
-			Toast.makeText(this, "Selected Binary File", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.compressed_file:
-			Toast.makeText(this, "Selected Compressed File", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.matlab_file:
-			Toast.makeText(this, "Selected Matlab File", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.raw_plot:
-			Toast.makeText(this, "Selected Raw Plot", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.range_plot:
-			Toast.makeText(this, "Selected Range Plot", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.doppler_plot:
-			Toast.makeText(this, "Selected Doppler Plot", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.fft_plot:
-			Toast.makeText(this, "Selected FFT Plot", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.sar_plot:
-			Toast.makeText(this, "Selected SAR Plot", Toast.LENGTH_SHORT)
-					.show();
-			break;
+			case R.id.raw_plot:
+				Toast.makeText(this, "Selected Raw Plot", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case R.id.range_plot:
+				Toast.makeText(this, "Selected Range Plot", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case R.id.doppler_plot:
+				Toast.makeText(this, "Selected Doppler Plot", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case R.id.fft_plot:
+				Toast.makeText(this, "Selected FFT Plot", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case R.id.sar_plot:
+				Toast.makeText(this, "Selected SAR Plot", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			/*case R.id.text_file:
+				// if (item.isChecked()) item.setChecked(false);
+				// else item.setChecked(true);
+				// return true;
+				Toast.makeText(this, "Selected Text File", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.binary_file:
+				Toast.makeText(this, "Selected Binary File", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case R.id.compressed_file:
+				Toast.makeText(this, "Selected Compressed File", Toast.LENGTH_SHORT)
+						.show();
+				break;
+			case R.id.matlab_file:
+				Toast.makeText(this, "Selected Matlab File", Toast.LENGTH_SHORT)
+						.show();
+				break;*/
 		}
 		return false;
 	}

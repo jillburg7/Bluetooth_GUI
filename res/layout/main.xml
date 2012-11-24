@@ -36,9 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/button_share"
-            android:onClick="@menu/saving_menu"
+            android:onClick="saveMenu"
             android:text="@string/save_data"
             android:textSize="28sp" />
+        	<!-- android:onClick="@menu/saving_menu" -->
     <!-- </RelativeLayout> -->
 
     <!-- aChartEngine -->
