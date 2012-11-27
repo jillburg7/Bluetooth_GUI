@@ -49,10 +49,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		}
 	}
 
-	// @Override
-	// protected void onStart() {
-	//
-	// }
 
 	@Override
 	protected void onResume() {
@@ -80,7 +76,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	public void doShare(View viewopts) {
 		Intent shareIntent = new Intent();
 		shareIntent.setAction(Intent.ACTION_SEND);
-	//	shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+//		shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
 		shareIntent.setType("image/jpeg");
 		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
 	}

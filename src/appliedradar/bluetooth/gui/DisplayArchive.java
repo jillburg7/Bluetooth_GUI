@@ -1,7 +1,15 @@
 package appliedradar.bluetooth.gui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
@@ -39,5 +47,48 @@ public class DisplayArchive extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+//
+//	// Find the directory for the SD Card using the API
+//	File sdcard = Environment.getExternalStorageDirectory();
+//
+//	// Get the text file
+//	File file = new File(sdcard, "simuData.txt");
+//
+//	if (file.exists()) 
+//    {
+//        ArrayList<String> readed = new ArrayList<String>();
+//
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(file));
+//            String line;
+//
+//            while ((line = br.readLine()) != null) {
+//                readed.add(line);
+//
+//            }
+//        }
+//        catch (IOException e) {
+//        	Log.e("MainActivity", "IOError"); // You'll need to add proper error
+//			// handling here
+//        }
+//    }
+	
+/*	try {
+		ArrayBuffer<Integer> data = new ArrayBuffer(new FileReader(file));
+	//	BufferedReader br = new BufferedReader(new FileReader(file));
+		String line;
+		int x = 0;
 
+		while ((line = br.readLine()) != null & (x != 4000)) {
+			x = x + 1;
+			int y = Integer.parseInt(line);
+			dataSeries.add(x, y);
+		}
+		br.close();
+	} catch (IOException e) {
+		Log.e("MainActivity", "IOError"); // You'll need to add proper error
+											// handling here
+	}*/
+	
+	
 }

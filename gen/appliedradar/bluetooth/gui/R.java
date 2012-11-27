@@ -36,8 +36,8 @@ public final class R {
         public static final int raw_plot=0x7f07000d;
         public static final int sar_plot=0x7f070011;
         public static final int saving_menu=0x7f070012;
-        public static final int textView1=0x7f070000;
         public static final int text_file=0x7f070013;
+        public static final int txtview1=0x7f070000;
     }
     public static final class layout {
         public static final int activity_display_archive=0x7f030000;
