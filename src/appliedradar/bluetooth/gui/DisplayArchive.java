@@ -1,18 +1,10 @@
 package appliedradar.bluetooth.gui;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import android.os.Bundle;
-import android.os.Environment;
 import android.app.Activity;
-import android.util.Log;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 
 public class DisplayArchive extends Activity {
 

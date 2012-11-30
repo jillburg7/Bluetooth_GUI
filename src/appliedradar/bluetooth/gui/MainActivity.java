@@ -2,8 +2,10 @@ package appliedradar.bluetooth.gui;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -64,29 +66,61 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 
 	    // Locate MenuItem with ShareActionProvider
-	    MenuItem item = menu.findItem(R.id.menu_item_share);
+	    MenuItem menuItem = menu.findItem(R.id.menu_item_share);
 
 	    // Fetch and store ShareActionProvider
-	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+	    mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
 
 	    // Return true to display menu
 	    return true;
 	}
 	
-	public void doShare(View viewopts) {
-		Intent shareIntent = new Intent();
-		shareIntent.setAction(Intent.ACTION_SEND);
-//		shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
-		shareIntent.setType("image/jpeg");
-		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+/*	public void doShare(View viewopts) {
+		List<Intent> targetedShareIntents = new ArrayList<Intent>();
+	    Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+	    shareIntent.setType("text/plain");
+	    List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(shareIntent, 0);
+	    if (!resInfo.isEmpty()) {
+	        for (ResolveInfo resolveInfo : resInfo) {
+	            String packageName = resolveInfo.activityInfo.packageName;
+	            Intent targetedShareIntent = new Intent(android.content.Intent.ACTION_SEND);
+	            targetedShareIntent.setType("text/plain");
+	            targetedShareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "subject to be shared");
+//	            if (StringUtils.equals(packageName, "com.facebook.katana")){
+//	                targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://link-to-be-shared.com");
+//	            }else{
+//	                targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "text message to shared");
+//	            }
+	
+	            targetedShareIntent.setPackage(packageName);
+	            targetedShareIntents.add(targetedShareIntent);
+	        }
+	        Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Select app to share");
+	        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
+	        startActivity(chooserIntent);
+	    }
+	}*/
+	    
+	Intent shareIntent = new Intent();
+	
+
+	public void doShare(Intent shareIntent) {
+		 if (mShareActionProvider != null) {
+		        mShareActionProvider.setShareIntent(shareIntent);
+		    }
+//		Intent shareIntent = new Intent();
+//		shareIntent.setAction(Intent.ACTION_SEND);
+//		shareIntent.setType("image/*");
+////		shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+//		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
 	}
 	
-	// Call to update the share intent
+/*	// Call to update the share intent
 	private void setShareIntent(Intent shareIntent) {
 	    if (mShareActionProvider != null) {
 	        mShareActionProvider.setShareIntent(shareIntent);
 	    }
-	}
+	}*/
 	
 	public void sendCollectSignal(View toast) {
 		Toast.makeText(this, "Selected Collect Data", Toast.LENGTH_SHORT)
@@ -207,21 +241,29 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		XYSeries dataSeries = new XYSeries("FMCW Radar- Simulated Data");
 
+
 		// Find the directory for the SD Card using the API
 		File sdcard = Environment.getExternalStorageDirectory();
 
 		// Get the text file
 		File file = new File(sdcard, "simuData.txt");
-
+ 
+		
+		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
-			int x = 0;
-
-			while ((line = br.readLine()) != null & (x != 4000)) {
-				x = x + 1;
-				int y = Integer.parseInt(line);
-				dataSeries.add(x, y);
+			int i = 0;
+			double[] array = new double[4000];
+			
+			while ((line = br.readLine()) != null & (i != 4000)) {
+				
+				array[i] = Integer.parseInt(line);
+				dataSeries.add(i, array[i]);
+				i++;
+				//i = i + 1;
+			//	int y = Integer.parseInt(line);
+				//dataSeries.add(i, y);	
 			}
 			br.close();
 		} catch (IOException e) {
