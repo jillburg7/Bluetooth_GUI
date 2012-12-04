@@ -2,10 +2,8 @@ package appliedradar.bluetooth.gui;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -32,10 +30,11 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
 
-	private ShareActionProvider mShareActionProvider;
+	ShareActionProvider mShareActionProvider;
 	private GraphicalView mChartView;
+	protected XYMultipleSeriesDataset mDataset;
+	protected XYMultipleSeriesRenderer mRenderer;
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +50,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		}
 	}
 
-
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -65,63 +63,62 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 
-	    // Locate MenuItem with ShareActionProvider
-	    MenuItem menuItem = menu.findItem(R.id.menu_item_share);
+		// Locate MenuItem with ShareActionProvider
+		MenuItem menuItem = menu.findItem(R.id.menu_item_share);
 
-	    // Fetch and store ShareActionProvider
-	    mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
+		// Fetch and store ShareActionProvider
+		mShareActionProvider = (ShareActionProvider) menuItem
+				.getActionProvider();
 
-	    // Return true to display menu
-	    return true;
+		// Return true to display menu
+		return true;
 	}
-	
-/*	public void doShare(View viewopts) {
-		List<Intent> targetedShareIntents = new ArrayList<Intent>();
-	    Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-	    shareIntent.setType("text/plain");
-	    List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(shareIntent, 0);
-	    if (!resInfo.isEmpty()) {
-	        for (ResolveInfo resolveInfo : resInfo) {
-	            String packageName = resolveInfo.activityInfo.packageName;
-	            Intent targetedShareIntent = new Intent(android.content.Intent.ACTION_SEND);
-	            targetedShareIntent.setType("text/plain");
-	            targetedShareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "subject to be shared");
-//	            if (StringUtils.equals(packageName, "com.facebook.katana")){
-//	                targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://link-to-be-shared.com");
-//	            }else{
-//	                targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "text message to shared");
-//	            }
-	
-	            targetedShareIntent.setPackage(packageName);
-	            targetedShareIntents.add(targetedShareIntent);
-	        }
-	        Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Select app to share");
-	        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
-	        startActivity(chooserIntent);
-	    }
-	}*/
-	    
-	Intent shareIntent = new Intent();
-	
 
-	public void doShare(Intent shareIntent) {
-		 if (mShareActionProvider != null) {
-		        mShareActionProvider.setShareIntent(shareIntent);
-		    }
-//		Intent shareIntent = new Intent();
-//		shareIntent.setAction(Intent.ACTION_SEND);
-//		shareIntent.setType("image/*");
-////		shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
-//		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
-	}
-	
-/*	// Call to update the share intent
-	private void setShareIntent(Intent shareIntent) {
-	    if (mShareActionProvider != null) {
-	        mShareActionProvider.setShareIntent(shareIntent);
-	    }
-	}*/
-	
+	/*
+	 * public void doShare(Intent shareIntent) { List<Intent>
+	 * targetedShareIntents = new ArrayList<Intent>(); shareIntent = new
+	 * Intent(android.content.Intent.ACTION_SEND);
+	 * shareIntent.setType("text/plain"); List<ResolveInfo> resInfo =
+	 * getPackageManager().queryIntentActivities(shareIntent, 0); if
+	 * (!resInfo.isEmpty()) { for (ResolveInfo resolveInfo : resInfo) { String
+	 * packageName = resolveInfo.activityInfo.packageName; Intent
+	 * targetedShareIntent = new Intent(android.content.Intent.ACTION_SEND);
+	 * targetedShareIntent.setType("text/plain");
+	 * targetedShareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+	 * "subject to be shared"); // if (StringUtils.equals(packageName,
+	 * "com.facebook.katana")){ //
+	 * targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+	 * "http://link-to-be-shared.com"); // }else{ //
+	 * targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+	 * "text message to shared"); // }
+	 * 
+	 * targetedShareIntent.setPackage(packageName);
+	 * targetedShareIntents.add(targetedShareIntent); } Intent chooserIntent =
+	 * Intent.createChooser(targetedShareIntents.remove(0),
+	 * "Select app to share");
+	 * chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
+	 * targetedShareIntents.toArray(new Parcelable[]{}));
+	 * startActivity(chooserIntent); } }
+	 */
+
+	// Intent shareIntent = new Intent(Intent.ACTION_SEND);
+
+	/*
+	 * public void doShare(Intent shareIntent) { if (mShareActionProvider !=
+	 * null) { mShareActionProvider.setShareIntent(shareIntent); } // Intent
+	 * shareIntent = new Intent(); // shareIntent.setAction(Intent.ACTION_SEND);
+	 * // shareIntent.setType("image/*"); ////
+	 * shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage); //
+	 * startActivity(Intent.createChooser(shareIntent,
+	 * getResources().getText(R.string.send_to))); }
+	 */
+
+	/*
+	 * // Call to update the share intent private void setShareIntent(Intent
+	 * shareIntent) { if (mShareActionProvider != null) {
+	 * mShareActionProvider.setShareIntent(shareIntent); } }
+	 */
+
 	public void sendCollectSignal(View toast) {
 		Toast.makeText(this, "Selected Collect Data", Toast.LENGTH_SHORT)
 				.show();
@@ -144,94 +141,92 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	// Saving pop-up menu
 	public void saveMenu(View display) {
 		PopupMenu popup2 = new PopupMenu(this, display);
-//		popup2.setOnMenuItemClickListener(this);
+		// popup2.setOnMenuItemClickListener(this);
 		popup2.inflate(R.menu.saving_menu);
 		popup2.show();
 	}
 
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case R.id.text_file:
-	        	if (item.isChecked()) {
-	        		//item.setChecked(false);
-	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
-	            else {
-	            	item.setChecked(true);
-	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
-	            return true;
-	        case R.id.binary_file:
-	            if (item.isChecked()) {
-	        		item.setChecked(false);
-	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
-	            else {
-	            	item.setChecked(true);
-	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
-	            return true;
-	        case R.id.compressed_file:
-	            if (item.isChecked()) {
-	        		item.setChecked(false);
-	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
-	            else {
-	            	item.setChecked(true);
-	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
-	            return true;
-	        case R.id.matlab_file:
-	            if (item.isChecked()) {
-	        		item.setChecked(false);
-	        		Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT).show(); }
-	            else {
-	            	item.setChecked(true);
-	            	Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show(); }
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.text_file:
+			if (item.isChecked()) {
+				// item.setChecked(false);
+				Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				item.setChecked(true);
+				Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		case R.id.binary_file:
+			if (item.isChecked()) {
+				item.setChecked(false);
+				Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				item.setChecked(true);
+				Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		case R.id.compressed_file:
+			if (item.isChecked()) {
+				item.setChecked(false);
+				Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				item.setChecked(true);
+				Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		case R.id.matlab_file:
+			if (item.isChecked()) {
+				item.setChecked(false);
+				Toast.makeText(this, "Was true, set False", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				item.setChecked(true);
+				Toast.makeText(this, "Checked", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	 
 
 	// For testing button & popup menu purposes only!
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.raw_plot:
-				Toast.makeText(this, "Selected Raw Plot", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			case R.id.range_plot:
-				Toast.makeText(this, "Selected Range Plot", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			case R.id.doppler_plot:
-				Toast.makeText(this, "Selected Doppler Plot", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			case R.id.fft_plot:
-				Toast.makeText(this, "Selected FFT Plot", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			case R.id.sar_plot:
-				Toast.makeText(this, "Selected SAR Plot", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			/*case R.id.text_file:
-				// if (item.isChecked()) item.setChecked(false);
-				// else item.setChecked(true);
-				// return true;
-				Toast.makeText(this, "Selected Text File", Toast.LENGTH_SHORT).show();
-				break;
-			case R.id.binary_file:
-				Toast.makeText(this, "Selected Binary File", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			case R.id.compressed_file:
-				Toast.makeText(this, "Selected Compressed File", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			case R.id.matlab_file:
-				Toast.makeText(this, "Selected Matlab File", Toast.LENGTH_SHORT)
-						.show();
-				break;*/
+		case R.id.raw_plot:
+			Toast.makeText(this, "Selected Raw Plot", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case R.id.range_plot:
+			Toast.makeText(this, "Selected Range Plot", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case R.id.doppler_plot:
+			Toast.makeText(this, "Selected Doppler Plot", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case R.id.fft_plot:
+			Toast.makeText(this, "Selected FFT Plot", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case R.id.sar_plot:
+			Toast.makeText(this, "Selected SAR Plot", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		/*
+		 * case R.id.text_file: // if (item.isChecked()) item.setChecked(false);
+		 * // else item.setChecked(true); // return true; Toast.makeText(this,
+		 * "Selected Text File", Toast.LENGTH_SHORT).show(); break; case
+		 * R.id.binary_file: Toast.makeText(this, "Selected Binary File",
+		 * Toast.LENGTH_SHORT) .show(); break; case R.id.compressed_file:
+		 * Toast.makeText(this, "Selected Compressed File", Toast.LENGTH_SHORT)
+		 * .show(); break; case R.id.matlab_file: Toast.makeText(this,
+		 * "Selected Matlab File", Toast.LENGTH_SHORT) .show(); break;
+		 */
 		}
 		return false;
 	}
@@ -241,29 +236,32 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		XYSeries dataSeries = new XYSeries("FMCW Radar- Simulated Data");
 
+		double[] array;
+		int i = 0;
+		// if (array[i] == 0){
+		// mDataset = null;
+		// }
 
 		// Find the directory for the SD Card using the API
 		File sdcard = Environment.getExternalStorageDirectory();
 
 		// Get the text file
 		File file = new File(sdcard, "simuData.txt");
- 
-		
-		
+
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
-			int i = 0;
-			double[] array = new double[4000];
-			
+			// int i = 0;
+			array = new double[4000];
+
 			while ((line = br.readLine()) != null & (i != 4000)) {
-				
+
 				array[i] = Integer.parseInt(line);
 				dataSeries.add(i, array[i]);
 				i++;
-				//i = i + 1;
-			//	int y = Integer.parseInt(line);
-				//dataSeries.add(i, y);	
+				// i = i + 1;
+				// int y = Integer.parseInt(line);
+				// dataSeries.add(i, y);
 			}
 			br.close();
 		} catch (IOException e) {
@@ -331,4 +329,90 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		myRenderer.setShowGrid(true);
 		return myRenderer;
 	}
+
+	// public double[] fftData (double[] sampleData) {
+	// double[] fftData = new double[4000];
+	//
+	// return fftData;
+	// }
+
+	// private double[] FFT(){
+	// double[] fftData = new double[4000];
+	//
+	// int n, m;
+	//
+	// // Lookup tables. Only need to recompute when size of FFT changes.
+	// double[] cos;
+	// double[] sin;
+	//
+	// // public FFTcalc(int n) {
+	//
+	// // }
+	//
+	// return fftData;
+	// }
+
+	/*
+	 * 
+	 * public FFT(int n) { this.n = n; this.m = (int)(Math.log(n) /
+	 * Math.log(2));
+	 * 
+	 * // Make sure n is a power of 2 if(n != (1<<m)) throw new
+	 * RuntimeException("FFT length must be power of 2");
+	 * 
+	 * // precompute tables cos = new double[n]; sin = new double[n];
+	 * 
+	 * //Prints the value of 'n' to screen --> used to established // where the
+	 * value of 'n' came from. // Value of 'n' is == to 'N' {declared below}
+	 * System.out.println(n);
+	 * 
+	 * for(int i=0; i<n; i++) { cos[i] = Math.cos(-2*Math.PI*i); sin[i] =
+	 * Math.sin(-2*Math.PI*i);
+	 * 
+	 * } }
+	 * 
+	 * public void fft(double[] x, double[] y) { int i,j,k,n1,n2,a; double
+	 * c,s,t1,t2;
+	 * 
+	 * 
+	 * // Bit-reverse j = 0; n2 = n/2; for (i=1; i < n - 1; i++) { n1 = n2;
+	 * while ( j >= n1 ) { j = j - n1; n1 = n1/2; } j = j + n1;
+	 * 
+	 * if (i < j) { t1 = x[i]; x[i] = x[j]; x[j] = t1; t1 = y[i]; y[i] = y[j];
+	 * y[j] = t1; } }
+	 * 
+	 * // FFT n1 = 0; n2 = 1;
+	 * 
+	 * for (i=0; i < m; i++) { n1 = n2; n2 = n2 + n2; a = 0;
+	 * 
+	 * for (j=0; j < n1; j++) { c = cos[a]; s = sin[a]; a += 1 << (m-i-1);
+	 * 
+	 * for (k=j; k < n; k=k+n2) { t1 = c*x[k+n1] - s*y[k+n1]; t2 = s*x[k+n1] +
+	 * c*y[k+n1]; x[k+n1] = x[k] - t1; y[k+n1] = y[k] - t2; x[k] = x[k] + t1;
+	 * y[k] = y[k] + t2; } } } }
+	 * 
+	 * // Test the FFT to make sure it's working public static void
+	 * main(String[] args) { int N = 32;
+	 * 
+	 * FFT fft = new FFT(N);
+	 * 
+	 * double[] re = new double[N]; double[] im = new double[N];
+	 * 
+	 * System.out.println((0.5)*N); // Single sin for(int i=0; i<N; i++) { re[i]
+	 * = 2*Math.cos(3*2*Math.PI*i/N); im[i] = 0; } beforeAfter(fft, re, im); }
+	 * 
+	 * protected static void beforeAfter(FFT fft, double[] re, double[] im) {
+	 * System.out.println("Before: "); printReIm(re, im); fft.fft(re, im);
+	 * System.out.println("After: "); printReIm(re, im); }
+	 * 
+	 * protected static void printReIm(double[] re, double[] im) {
+	 * System.out.print("Re: ["); for(int i=0; i<re.length; i++)
+	 * System.out.print(((int)(re[i]*1000)/1000.0) + " ");
+	 * 
+	 * System.out.print("]\nIm: ["); for(int i=0; i<im.length; i++)
+	 * System.out.print(((int)(im[i]*1000)/1000.0) + " ");
+	 * 
+	 * System.out.println("]"); }
+	 */
+
 }

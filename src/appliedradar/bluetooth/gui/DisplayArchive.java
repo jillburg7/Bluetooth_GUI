@@ -14,12 +14,21 @@ public class DisplayArchive extends Activity {
 		setContentView(R.layout.activity_display_archive);
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setTitle("Data Archive");
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_display_archive, menu);
+
+		// // Locate MenuItem with ShareActionProvider
+		// MenuItem menuItem = menu.findItem(R.id.menu_item_share);
+		//
+		// // Fetch and store ShareActionProvider
+		// mShareActionProvider = (ShareActionProvider)
+		// menuItem.getActionProvider();
+
 		return true;
 	}
 
@@ -39,48 +48,49 @@ public class DisplayArchive extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-//
-//	// Find the directory for the SD Card using the API
-//	File sdcard = Environment.getExternalStorageDirectory();
-//
-//	// Get the text file
-//	File file = new File(sdcard, "simuData.txt");
-//
-//	if (file.exists()) 
-//    {
-//        ArrayList<String> readed = new ArrayList<String>();
-//
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(file));
-//            String line;
-//
-//            while ((line = br.readLine()) != null) {
-//                readed.add(line);
-//
-//            }
-//        }
-//        catch (IOException e) {
-//        	Log.e("MainActivity", "IOError"); // You'll need to add proper error
-//			// handling here
-//        }
-//    }
-	
-/*	try {
-		ArrayBuffer<Integer> data = new ArrayBuffer(new FileReader(file));
-	//	BufferedReader br = new BufferedReader(new FileReader(file));
-		String line;
-		int x = 0;
 
-		while ((line = br.readLine()) != null & (x != 4000)) {
-			x = x + 1;
-			int y = Integer.parseInt(line);
-			dataSeries.add(x, y);
-		}
-		br.close();
-	} catch (IOException e) {
-		Log.e("MainActivity", "IOError"); // You'll need to add proper error
-											// handling here
-	}*/
-	
-	
+	// // Call to update the share intent
+	// private void setShareIntent(Intent shareIntent) {
+	// if (mShareActionProvider != null) {
+	// mShareActionProvider.setShareIntent(shareIntent);
+	// }
+	// }
 }
+
+//
+// // Find the directory for the SD Card using the API
+// File sdcard = Environment.getExternalStorageDirectory();
+//
+// // Get the text file
+// File file = new File(sdcard, "simuData.txt");
+//
+// if (file.exists())
+// {
+// ArrayList<String> readed = new ArrayList<String>();
+//
+// try {
+// BufferedReader br = new BufferedReader(new FileReader(file));
+// String line;
+//
+// while ((line = br.readLine()) != null) {
+// readed.add(line);
+//
+// }
+// }
+// catch (IOException e) {
+// Log.e("MainActivity", "IOError"); // You'll need to add proper error
+// // handling here
+// }
+// }
+
+/*
+ * try { ArrayBuffer<Integer> data = new ArrayBuffer(new FileReader(file)); //
+ * BufferedReader br = new BufferedReader(new FileReader(file)); String line;
+ * int x = 0;
+ * 
+ * while ((line = br.readLine()) != null & (x != 4000)) { x = x + 1; int y =
+ * Integer.parseInt(line); dataSeries.add(x, y); } br.close(); } catch
+ * (IOException e) { Log.e("MainActivity", "IOError"); // You'll need to add
+ * proper error // handling here }
+ */
+
