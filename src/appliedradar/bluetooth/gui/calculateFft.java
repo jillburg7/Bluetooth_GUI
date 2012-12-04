@@ -8,23 +8,39 @@ public class calculateFft {
 	double[] sin;
 
 	public calculateFft(int n) {
+		
+		//n=32;
+		//double[] reArray = dataArray;
 		this.n = n;
 		this.m = (int)(Math.log(n) / Math.log(2));
-
+		
 		// Make sure n is a power of 2
 		if(n != (1<<m))
 			throw new RuntimeException("FFT length must be power of 2");
 
+//		double[] re = new double[n];
+//		double[] im = new double[n];
+
+//		//		System.out.println((0.5)*N);
+//		// Single sin		
+//		for(int i=0; i<n; i++) {
+//			re = dataArray;
+//			im[i] = 0;
+//		}
+		
 		// precompute tables
 		cos = new double[n];
 		sin = new double[n];
+		
 		for(int i=0; i<n; i++) {
 			cos[i] = Math.cos(-2*Math.PI*i);
 			sin[i] = Math.sin(-2*Math.PI*i);
-
 		}
+	//	return dataArray;
 		
 	}
+
+	
 
 	public void fft(double[] x, double[] y)
 	{
@@ -79,45 +95,53 @@ public class calculateFft {
 		}
 	}
 
-	public static double[] main(String[] args) {
-		int N = 32;
-
-		calculateFft fft = new calculateFft(N);
-
-		double[] re = new double[N];
-		double[] im = new double[N];
+//	public void main(String[] args) {
+//	
+//	}
+	public double[] realArray(double[] dataArray) {
+		//int N = 32;
+		calculateFft fft = new calculateFft(n);
+		double[] re = new double[n];
+		double[] im = new double[n];
 
 		//		System.out.println((0.5)*N);
 		// Single sin		
-		for(int i=0; i<N; i++) {
-			re[i] = 2*Math.cos(3*2*Math.PI*i/N);
+		for(int i=0; i<n; i++) {
+			re = dataArray;
 			im[i] = 0;
 		}
-		//		beforeAfter(fft, re, im);
-
-		//		protected static void beforeAfter(FFT fft, double[] re, double[] im) {
-		//			System.out.println("Before: ");
-		//			printReIm(re, im);
-		fft.fft(re, im);
-		//			System.out.println("After: ");
-		//			printReIm(re, im);
-		//		}
-
-			//	public printReIm(double[] re, double[] im) {
-		//			System.out.print("Re: [");
-					for(int i=0; i<re.length; i++)
-						re[i]=((int)(re[i]*1000)/1000.0);
-					
-					for(int i=0; i<im.length; i++)
-						im[i]=((int)(im[i]*1000)/1000.0);
-		//				System.out.print(((int)(re[i]*1000)/1000.0) + " ");
-		//
-		//			System.out.print("]\nIm: [");
-		//			for(int i=0; i<im.length; i++)
-		//				System.out.print(((int)(im[i]*1000)/1000.0) + " ");
-		//
-		//			System.out.println("]");
-			//	}
-	return re;
+		System.out.println("in realArray, re=" + re);
+		double[] reArray = new double[n];
+		reArray = beforeAfter(fft, re, im);
+		System.out.println("in realArray, re=" + re);
+		
+		return reArray;
 	}
+
+	public double[] beforeAfter(calculateFft fft, double[] re, double[] im) {
+//		for(int i=0; i<re.length; i++)
+//			re[i]=((int)(re[i]*1000)/1000.0);
+//					
+//		for(int i=0; i<im.length; i++)
+//			im[i]=((int)(im[i]*1000)/1000.0);
+		System.out.println("in beforeAfter AFTER, re=" + re);
+			System.out.println("Before: ");
+			printReIm(re, im);
+			fft.fft(re, im);
+			System.out.println("After: ");
+			printReIm(re, im);
+			return re;
+		}
+		
+		protected static void printReIm(double[] re, double[] im) {
+			System.out.print("Re: [");
+			for(int i=0; i<re.length; i++)
+				System.out.print(((int)(re[i]*1000)/1000.0) + " ");
+		
+			System.out.print("]\nIm: [");
+			for(int i=0; i<im.length; i++)
+				System.out.print(((int)(im[i]*1000)/1000.0) + " ");
+		
+			System.out.println("]");
+		}
 }
