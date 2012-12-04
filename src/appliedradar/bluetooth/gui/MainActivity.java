@@ -231,18 +231,13 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		return false;
 	}
 
-	public XYMultipleSeriesDataset getMyData() {
-		XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
-
-		XYSeries dataSeries = new XYSeries("FMCW Radar- Simulated Data");
-
-		double[] array;
-		int i = 0;
-		// if (array[i] == 0){
-		// mDataset = null;
-		// }
-
-		// Find the directory for the SD Card using the API
+	
+	double[] dataArray;
+	
+	//get Data from a file in External Storage --> SD Card (?)
+	public double[] getDataFromFile() {
+		
+		//double[] dataArray = null;
 		File sdcard = Environment.getExternalStorageDirectory();
 
 		// Get the text file
@@ -251,25 +246,36 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
-			// int i = 0;
-			array = new double[4000];
+			int i = 0;
+			dataArray = new double[4000];
 
 			while ((line = br.readLine()) != null & (i != 4000)) {
-
-				array[i] = Integer.parseInt(line);
-				dataSeries.add(i, array[i]);
+				dataArray[i] = Integer.parseInt(line);
 				i++;
-				// i = i + 1;
-				// int y = Integer.parseInt(line);
-				// dataSeries.add(i, y);
 			}
 			br.close();
-		} catch (IOException e) {
-			Log.e("MainActivity", "IOError"); // You'll need to add proper error
-												// handling here
+		} 
+		// You'll need to add proper error handling here
+		catch (IOException e) {
+			Log.e("MainActivity", "IOError");
 		}
-		myData.addSeries(dataSeries);
+		return dataArray;
+		
+	}
+	
+	public XYMultipleSeriesDataset getMyData() {
+		XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
 
+		XYSeries dataSeries = new XYSeries("FMCW Radar- Simulated Data");
+		
+		double[] array = new double[4000];
+		array = getDataFromFile();
+		int x=0;
+		for (x=0; x<4000; x++){
+			dataSeries.add(x, array[x]);
+		}
+
+		myData.addSeries(dataSeries);
 		return myData;
 	}
 
@@ -329,7 +335,46 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		myRenderer.setShowGrid(true);
 		return myRenderer;
 	}
+}
 
+	
+	
+	
+	/*		double[] array;
+	int i = 0;
+	// if (array[i] == 0){
+	// mDataset = null;
+	// }
+
+	// Find the directory for the SD Card using the API
+	File sdcard = Environment.getExternalStorageDirectory();
+
+	// Get the text file
+	File file = new File(sdcard, "simuData.txt");
+
+	try {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line;
+		// int i = 0;
+		array = new double[4000];
+
+		while ((line = br.readLine()) != null & (i != 4000)) {
+
+			array[i] = Integer.parseInt(line);
+			dataSeries.add(i, array[i]);
+			i++;
+			// i = i + 1;
+			// int y = Integer.parseInt(line);
+			// dataSeries.add(i, y);
+		}
+		br.close();
+	} catch (IOException e) {
+		Log.e("MainActivity", "IOError"); // You'll need to add proper error
+											// handling here
+	}*/
+	
+	
+	
 	// public double[] fftData (double[] sampleData) {
 	// double[] fftData = new double[4000];
 	//
@@ -414,5 +459,3 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	 * 
 	 * System.out.println("]"); }
 	 */
-
-}
