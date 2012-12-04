@@ -129,6 +129,15 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		Intent archiveData = new Intent(this, DisplayArchive.class);
 		startActivity(archiveData);
 	}
+	
+	public void plotFFT(View fftPlot) {
+	//	dataArray.calculateFft(dataArray);
+		Toast.makeText(this, "Selected Plot FFT", Toast.LENGTH_SHORT).show();
+		//dataArray = getFftData();
+	//	dataArray = getDataFromFile();
+		//mChartView.repaint();
+		
+	}
 
 	// Plotting pop-up menu
 	public void plotMenu(View view) {
@@ -194,6 +203,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		}
 	}
 
+	
 	// For testing button & popup menu purposes only!
 	public boolean onMenuItemClick(MenuItem item) {
 		switch (item.getItemId()) {
@@ -234,23 +244,23 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	double[] dataArray;
 	
-	//get Data from a file in External Storage --> SD Card (?)
+	// gets Data from a file in External Storage --> SD Card (?)
+	// NEED TO UPDATE FOR UNIVERSAL DATA FILES 
 	public double[] getDataFromFile() {
-		
-		//double[] dataArray = null;
 		File sdcard = Environment.getExternalStorageDirectory();
 
 		// Get the text file
-		File file = new File(sdcard, "simuData.txt");
+		// NEED TO SPECIFICALLY CHANGE THIS LINE OF CODE TO BE MORE UNIVERSAL!
+		File file = new File(sdcard, "ffttesting.txt");
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			int i = 0;
-			dataArray = new double[4000];
+			dataArray = new double[31];
 
-			while ((line = br.readLine()) != null & (i != 4000)) {
-				dataArray[i] = Integer.parseInt(line);
+			while ((line = br.readLine()) != null & (i != 31)) {
+				dataArray[i] = Float.parseFloat(line);
 				i++;
 			}
 			br.close();
@@ -259,8 +269,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		catch (IOException e) {
 			Log.e("MainActivity", "IOError");
 		}
-		return dataArray;
-		
+		return dataArray;	
 	}
 	
 	public XYMultipleSeriesDataset getMyData() {
@@ -268,14 +277,25 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		XYSeries dataSeries = new XYSeries("FMCW Radar- Simulated Data");
 		
-		double[] array = new double[4000];
+		double[] array = new double[31];
 		array = getDataFromFile();
+		//array = getFftData();
 		int x=0;
-		for (x=0; x<4000; x++){
+		for (x=0; x<31; x++){
 			dataSeries.add(x, array[x]);
 		}
-
 		myData.addSeries(dataSeries);
+		
+//		XYSeries dataSeries2 = new XYSeries("FFT data");
+//		double[] array2 = new double[31];
+//		
+//		array2 = getFftData();
+//		int x=0;
+//		for (x=0; x<31; x++){
+//			dataSeries.add(x, array2[x]);
+//		}
+//		myData.addSeries(dataSeries2);
+		
 		return myData;
 	}
 
@@ -319,15 +339,12 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		// background color of the PLOT ONLY
 		myRenderer.setApplyBackgroundColor(true);
-		myRenderer.setBackgroundColor(Color.LTGRAY); // Color.TRANSPARENT would
-														// show the background
-														// of the app
-														// (MainActivity)
+		// Color.TRANSPARENT would show the background of the app (MainActivity)
+		myRenderer.setBackgroundColor(Color.LTGRAY); 
 
-		myRenderer.setMarginsColor(Color.WHITE); // sets the background area of
-													// the object itself
-													// does not change the plots
-													// background
+		// sets the background area of the object itself
+		// does not change the plots background
+		myRenderer.setMarginsColor(Color.WHITE); 
 
 		myRenderer.setGridColor(Color.DKGRAY);
 		myRenderer.setXLabels(20);
@@ -335,43 +352,22 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		myRenderer.setShowGrid(true);
 		return myRenderer;
 	}
-}
+	
+	public double[] getFftData(){
+		//double[] fftData = new double[31];
+		double[] imagData = new double[31];
+		calculateFft fftData = new calculateFft(32);
+		fftData.fft(dataArray, imagData);
+		//int newDataArray = fftData;
+		return dataArray;
+	}
+
+	
+} //END OF MAINACTIVITY CODE!
 
 	
 	
 	
-	/*		double[] array;
-	int i = 0;
-	// if (array[i] == 0){
-	// mDataset = null;
-	// }
-
-	// Find the directory for the SD Card using the API
-	File sdcard = Environment.getExternalStorageDirectory();
-
-	// Get the text file
-	File file = new File(sdcard, "simuData.txt");
-
-	try {
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		String line;
-		// int i = 0;
-		array = new double[4000];
-
-		while ((line = br.readLine()) != null & (i != 4000)) {
-
-			array[i] = Integer.parseInt(line);
-			dataSeries.add(i, array[i]);
-			i++;
-			// i = i + 1;
-			// int y = Integer.parseInt(line);
-			// dataSeries.add(i, y);
-		}
-		br.close();
-	} catch (IOException e) {
-		Log.e("MainActivity", "IOError"); // You'll need to add proper error
-											// handling here
-	}*/
 	
 	
 	

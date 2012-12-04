@@ -17,8 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/share_data"
-            android:textSize="28sp" />
+            android:text="Plot FFT"
+            android:textSize="28sp"
+            android:onClick="plotFFT" />
 
         <Button
             android:id="@+id/button_plot"
