@@ -133,11 +133,9 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	public void plotFFT(View fftPlot) {
 	
 		Toast.makeText(this, "Selected Plot FFT", Toast.LENGTH_SHORT).show();
-		double[] print = getFftData();
-		System.out.println("Clicking plotFFT button, print=" + print);
+//		double[] print = getFftData();
+//		System.out.println("Clicking plotFFT button, print=" + print);
 	//	mChartView.repaint(dataSeries2.getMyData(print));
-		
-		mChartView.repaint();
 		
 	}
 
@@ -229,16 +227,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 			Toast.makeText(this, "Selected SAR Plot", Toast.LENGTH_SHORT)
 					.show();
 			break;
-		/*
-		 * case R.id.text_file: // if (item.isChecked()) item.setChecked(false);
-		 * // else item.setChecked(true); // return true; Toast.makeText(this,
-		 * "Selected Text File", Toast.LENGTH_SHORT).show(); break; case
-		 * R.id.binary_file: Toast.makeText(this, "Selected Binary File",
-		 * Toast.LENGTH_SHORT) .show(); break; case R.id.compressed_file:
-		 * Toast.makeText(this, "Selected Compressed File", Toast.LENGTH_SHORT)
-		 * .show(); break; case R.id.matlab_file: Toast.makeText(this,
-		 * "Selected Matlab File", Toast.LENGTH_SHORT) .show(); break;
-		 */
 		}
 		return false;
 	}
@@ -277,11 +265,9 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	public XYMultipleSeriesDataset getMyData() {
 		XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
 
-		XYSeries dataSeries = new XYSeries("Simulated Data");
-		
+		XYSeries dataSeries = new XYSeries("Simulated Data");	
 		double[] array = new double[2048];
 		array = getDataFromFile();
-		//array = getFftData();
 		int i=0;
 		for (i=0; i<2048; i++){
 			dataSeries.add(i, array[i]);
@@ -289,8 +275,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		myData.addSeries(dataSeries);
 		
 		XYSeries dataSeries2 = new XYSeries("FFT data");
-		double[] array2;		
-		array2 = getFftData();
+		double[] array2= getFftData();
 		System.out.print("in getMyData, array2 =" + array2);
 		int j=0;
 		for (j=0; j<2048; j++){
@@ -357,20 +342,16 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		return myRenderer;
 	}
 	
-	//public double[] getFftData(double[] dataArray2){
-	public double[] getFftData(){
-	//public calculateFft getFftData(double[] dataArray2){
+	
+	public double[] getFftData() {
 		
 		double[] fftArray = new double[2048];
-		//double[] imagArray = new double[79];
 		
 		calculateFft fftData = new calculateFft(2048);
-		//fftData.fft(fftArray, imagArray);
 		fftArray = fftData.realArray(dataArray);
 		System.out.println("returned data" + fftData);
 		
 		return fftArray;
 	}
-
 	
 } //END OF MAINACTIVITY CODE!
