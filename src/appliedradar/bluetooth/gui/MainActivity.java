@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	private GraphicalView mChartView;
 	protected XYMultipleSeriesDataset mDataset;
 	protected XYMultipleSeriesRenderer mRenderer;
+	double[] dataArray;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		super.onResume();
 		if (mChartView != null) {
 			mChartView.repaint();
+			XYSeries seriesA = new XYSeries("new Series");
+			
 		}
 	}
 
@@ -74,51 +77,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		return true;
 	}
 
-	/*
-	 * public void doShare(Intent shareIntent) { List<Intent>
-	 * targetedShareIntents = new ArrayList<Intent>(); shareIntent = new
-	 * Intent(android.content.Intent.ACTION_SEND);
-	 * shareIntent.setType("text/plain"); List<ResolveInfo> resInfo =
-	 * getPackageManager().queryIntentActivities(shareIntent, 0); if
-	 * (!resInfo.isEmpty()) { for (ResolveInfo resolveInfo : resInfo) { String
-	 * packageName = resolveInfo.activityInfo.packageName; Intent
-	 * targetedShareIntent = new Intent(android.content.Intent.ACTION_SEND);
-	 * targetedShareIntent.setType("text/plain");
-	 * targetedShareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-	 * "subject to be shared"); // if (StringUtils.equals(packageName,
-	 * "com.facebook.katana")){ //
-	 * targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-	 * "http://link-to-be-shared.com"); // }else{ //
-	 * targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-	 * "text message to shared"); // }
-	 * 
-	 * targetedShareIntent.setPackage(packageName);
-	 * targetedShareIntents.add(targetedShareIntent); } Intent chooserIntent =
-	 * Intent.createChooser(targetedShareIntents.remove(0),
-	 * "Select app to share");
-	 * chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-	 * targetedShareIntents.toArray(new Parcelable[]{}));
-	 * startActivity(chooserIntent); } }
-	 */
-
-	// Intent shareIntent = new Intent(Intent.ACTION_SEND);
-
-	/*
-	 * public void doShare(Intent shareIntent) { if (mShareActionProvider !=
-	 * null) { mShareActionProvider.setShareIntent(shareIntent); } // Intent
-	 * shareIntent = new Intent(); // shareIntent.setAction(Intent.ACTION_SEND);
-	 * // shareIntent.setType("image/*"); ////
-	 * shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage); //
-	 * startActivity(Intent.createChooser(shareIntent,
-	 * getResources().getText(R.string.send_to))); }
-	 */
-
-	/*
-	 * // Call to update the share intent private void setShareIntent(Intent
-	 * shareIntent) { if (mShareActionProvider != null) {
-	 * mShareActionProvider.setShareIntent(shareIntent); } }
-	 */
-
 	public void sendCollectSignal(View toast) {
 		Toast.makeText(this, "Selected Collect Data", Toast.LENGTH_SHORT)
 				.show();
@@ -131,12 +89,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 	
 	public void plotFFT(View fftPlot) {
-	
 		Toast.makeText(this, "Selected Plot FFT", Toast.LENGTH_SHORT).show();
-//		double[] print = getFftData();
-//		System.out.println("Clicking plotFFT button, print=" + print);
-	//	mChartView.repaint(dataSeries2.getMyData(print));
-		
 	}
 
 	// Plotting pop-up menu
@@ -232,7 +185,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 
 	
-	double[] dataArray;
+//	double[] dataArray;
 	
 	// gets Data from a file in External Storage --> SD Card (?)
 	// NEED TO UPDATE FOR UNIVERSAL DATA FILES 
@@ -242,7 +195,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		// Get the text file
 		// NEED TO SPECIFICALLY CHANGE THIS LINE OF CODE TO BE MORE UNIVERSAL!
 		File file = new File(sdcard, "100MhzRealReturn.txt");
-
+		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
@@ -285,7 +238,18 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		
 		return myData;
 	}
-
+	
+	public double[] getFftData() {
+		
+		double[] fftArray = new double[8192];
+		
+		calculateFft fftData = new calculateFft(8192);
+		fftArray = fftData.realArray(dataArray);
+		//System.out.println("returned data" + fftData);
+		
+		return fftArray;
+	}
+	
 	public XYMultipleSeriesRenderer getMyRenderer() {
 		XYSeriesRenderer r1 = new XYSeriesRenderer();
 		r1.setColor(Color.BLUE);
@@ -343,18 +307,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		myRenderer.setYLabels(9);
 		myRenderer.setShowGrid(true);
 		return myRenderer;
-	}
-	
-	
-	public double[] getFftData() {
-		
-		double[] fftArray = new double[8192];
-		
-		calculateFft fftData = new calculateFft(8192);
-		fftArray = fftData.realArray(dataArray);
-		//System.out.println("returned data" + fftData);
-		
-		return fftArray;
 	}
 	
 } //END OF MAINACTIVITY CODE!

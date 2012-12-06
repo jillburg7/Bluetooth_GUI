@@ -60,12 +60,14 @@ public final class R {
         public static final int device_pair=0x7f040010;
         public static final int device_search=0x7f04000f;
         public static final int doppler_plot=0x7f040002;
+        public static final int enter_txtfile=0x7f04001c;
         public static final int fft_plot=0x7f040003;
         public static final int freq_settings=0x7f04000d;
         public static final int hello_world=0x7f04001a;
         public static final int load_data=0x7f040013;
         public static final int matlab_file=0x7f040008;
         public static final int menu_settings=0x7f04000a;
+        public static final int plotFFT=0x7f04001d;
         public static final int plot_data=0x7f040016;
         public static final int range_plot=0x7f040001;
         public static final int raw_plot=0x7f040000;
