@@ -91,16 +91,16 @@ public class calculateFft {
 			re = dataArray;
 			im[i] = 0;
 		}
-		System.out.println("in realArray, re=" + re);
+	//	System.out.println("in realArray, re=" + re);
 		double[] reArray = new double[n];
 		reArray = beforeAfter(fft, re, im);
-		System.out.println("in realArray, re=" + re);
-
+//		System.out.println("in realArray, re=" + re);
+		
 		return reArray;
 	}
 
 	public double[] beforeAfter(calculateFft fft, double[] re, double[] im) {
-		System.out.println("in beforeAfter AFTER, re=" + re);
+		//System.out.println("in beforeAfter AFTER, re=" + re);
 		System.out.println("Before: ");
 		printReIm(re, im);
 		fft.fft(re, im);

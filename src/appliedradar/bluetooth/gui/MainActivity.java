@@ -241,15 +241,15 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		// Get the text file
 		// NEED TO SPECIFICALLY CHANGE THIS LINE OF CODE TO BE MORE UNIVERSAL!
-		File file = new File(sdcard, "simuData.txt");
+		File file = new File(sdcard, "100MhzRealReturn.txt");
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			int i = 0;
-			dataArray = new double[2048];
+			dataArray = new double[8192];	//2048
 
-			while ((line = br.readLine()) != null & (i != 2048)) {
+			while ((line = br.readLine()) != null & (i != 8192)) {	//2048
 				dataArray[i] = Float.parseFloat(line);
 				i++;
 			}
@@ -266,10 +266,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		XYMultipleSeriesDataset myData = new XYMultipleSeriesDataset();
 
 		XYSeries dataSeries = new XYSeries("Simulated Data");	
-		double[] array = new double[2048];
+		double[] array = new double[8192];	//2048
 		array = getDataFromFile();
 		int i=0;
-		for (i=0; i<2048; i++){
+		for (i=0; i<8192; i++){				//2048
 			dataSeries.add(i, array[i]);
 		}
 		myData.addSeries(dataSeries);
@@ -278,7 +278,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		double[] array2= getFftData();
 		System.out.print("in getMyData, array2 =" + array2);
 		int j=0;
-		for (j=0; j<2048; j++){
+		for (j=0; j<8192; j++){
 			dataSeries2.add(j, array2[j]);
 		}
 		myData.addSeries(dataSeries2);
@@ -311,8 +311,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		String title = "FMCW Radar Data Plot";
 		myRenderer.setChartTitle(title);
-		int textSize = 24;
-		myRenderer.setChartTitleTextSize(textSize);
+	//	int textSize = 24;
+		myRenderer.setChartTitleTextSize(30);
+		
+		myRenderer.setLegendTextSize(20);
 
 		myRenderer.setZoomRate(10);
 
@@ -325,6 +327,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		myRenderer.setXTitle("Samples");
 		myRenderer.setYTitle("Amplitude");
+		myRenderer.setAxisTitleTextSize(20);
 
 		// background color of the PLOT ONLY
 		myRenderer.setApplyBackgroundColor(true);
@@ -345,11 +348,11 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	public double[] getFftData() {
 		
-		double[] fftArray = new double[2048];
+		double[] fftArray = new double[8192];
 		
-		calculateFft fftData = new calculateFft(2048);
+		calculateFft fftData = new calculateFft(8192);
 		fftArray = fftData.realArray(dataArray);
-		System.out.println("returned data" + fftData);
+		//System.out.println("returned data" + fftData);
 		
 		return fftArray;
 	}
