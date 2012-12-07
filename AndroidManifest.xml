@@ -30,6 +30,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="appliedradar.bluetooth.gui.MainActivity" />
         </activity>
+        <activity
+            android:name="appliedradar.bluetooth.gui.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="appliedradar.bluetooth.gui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="appliedradar.bluetooth.gui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
