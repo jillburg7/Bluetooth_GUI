@@ -5,9 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class DisplayArchive extends Activity {
-
+	
+    void showToast(CharSequence msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -15,6 +25,23 @@ public class DisplayArchive extends Activity {
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle("Data Archive");
+		
+        Spinner s2 = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.recentDataFiles,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s2.setAdapter(adapter);
+        s2.setOnItemSelectedListener(
+                new OnItemSelectedListener() {
+                    public void onItemSelected(
+                            AdapterView<?> parent, View view, int position, long id) {
+                        showToast("Spinner2: position=" + position + " id=" + id);
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        showToast("Spinner2: unselected");
+                    }
+                });
 	}
 
 	@Override
@@ -48,49 +75,4 @@ public class DisplayArchive extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	// // Call to update the share intent
-	// private void setShareIntent(Intent shareIntent) {
-	// if (mShareActionProvider != null) {
-	// mShareActionProvider.setShareIntent(shareIntent);
-	// }
-	// }
 }
-
-//
-// // Find the directory for the SD Card using the API
-// File sdcard = Environment.getExternalStorageDirectory();
-//
-// // Get the text file
-// File file = new File(sdcard, "simuData.txt");
-//
-// if (file.exists())
-// {
-// ArrayList<String> readed = new ArrayList<String>();
-//
-// try {
-// BufferedReader br = new BufferedReader(new FileReader(file));
-// String line;
-//
-// while ((line = br.readLine()) != null) {
-// readed.add(line);
-//
-// }
-// }
-// catch (IOException e) {
-// Log.e("MainActivity", "IOError"); // You'll need to add proper error
-// // handling here
-// }
-// }
-
-/*
- * try { ArrayBuffer<Integer> data = new ArrayBuffer(new FileReader(file)); //
- * BufferedReader br = new BufferedReader(new FileReader(file)); String line;
- * int x = 0;
- * 
- * while ((line = br.readLine()) != null & (x != 4000)) { x = x + 1; int y =
- * Integer.parseInt(line); dataSeries.add(x, y); } br.close(); } catch
- * (IOException e) { Log.e("MainActivity", "IOError"); // You'll need to add
- * proper error // handling here }
- */
-

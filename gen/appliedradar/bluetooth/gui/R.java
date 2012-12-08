@@ -9,10 +9,9 @@ package appliedradar.bluetooth.gui;
 
 public final class R {
     public static final class array {
-        public static final int pref_example_list_titles=0x7f060000;
-        public static final int pref_example_list_values=0x7f060001;
-        public static final int pref_sync_frequency_titles=0x7f060002;
-        public static final int pref_sync_frequency_values=0x7f060003;
+        /**  Used in View/activity_display_archive.java 
+         */
+        public static final int recentDataFiles=0x7f040000;
     }
     public static final class attr {
     }
@@ -21,45 +20,50 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int binary_file=0x7f090014;
-        public static final int bt_settings=0x7f09000a;
-        public static final int button_collect=0x7f090006;
-        public static final int button_group=0x7f090005;
-        public static final int button_load=0x7f090007;
-        public static final int button_plot=0x7f090002;
-        public static final int button_save=0x7f090003;
-        public static final int button_share=0x7f090001;
-        public static final int chart=0x7f090004;
-        public static final int compressed_file=0x7f090015;
-        public static final int device_search=0x7f09000b;
-        public static final int doppler_plot=0x7f09000f;
-        public static final int fft_plot=0x7f090010;
-        public static final int matlab_file=0x7f090016;
-        public static final int menu_item_share=0x7f090009;
-        public static final int menu_settings=0x7f090008;
-        public static final int plotting_menu=0x7f09000c;
-        public static final int range_plot=0x7f09000e;
-        public static final int raw_plot=0x7f09000d;
-        public static final int sar_plot=0x7f090011;
-        public static final int saving_menu=0x7f090012;
-        public static final int text_file=0x7f090013;
-        public static final int txtview1=0x7f090000;
+        public static final int BTswitch=0x7f080002;
+        public static final int binary_file=0x7f080016;
+        public static final int bt_settings=0x7f08000c;
+        public static final int button_collect=0x7f080008;
+        public static final int button_group=0x7f080007;
+        public static final int button_load=0x7f080009;
+        public static final int button_plot=0x7f080004;
+        public static final int button_save=0x7f080005;
+        public static final int button_share=0x7f080003;
+        public static final int chart=0x7f080006;
+        public static final int compressed_file=0x7f080017;
+        public static final int device_search=0x7f08000d;
+        public static final int doppler_plot=0x7f080011;
+        public static final int fft_plot=0x7f080012;
+        public static final int matlab_file=0x7f080018;
+        public static final int menu_item_share=0x7f08000b;
+        public static final int menu_settings=0x7f08000a;
+        public static final int plotting_menu=0x7f08000e;
+        public static final int range_plot=0x7f080010;
+        public static final int raw_plot=0x7f08000f;
+        public static final int sar_plot=0x7f080013;
+        public static final int saving_menu=0x7f080014;
+        public static final int spinner=0x7f080001;
+        public static final int spinner_text=0x7f080000;
+        public static final int text_file=0x7f080015;
     }
     public static final class layout {
         public static final int activity_display_archive=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int radiogroup=0x7f030002;
+        public static final int activity_new=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int radiogroup=0x7f030003;
     }
     public static final class menu {
-        public static final int activity_display_archive=0x7f080000;
-        public static final int activity_settings=0x7f080001;
-        public static final int main_menu=0x7f080002;
-        public static final int plotting_menu=0x7f080003;
-        public static final int saving_menu=0x7f080004;
+        public static final int activity_display_archive=0x7f070000;
+        public static final int activity_new=0x7f070001;
+        public static final int activity_settings=0x7f070002;
+        public static final int main_menu=0x7f070003;
+        public static final int plotting_menu=0x7f070004;
+        public static final int saving_menu=0x7f070005;
     }
     public static final class string {
         public static final int app_name=0x7f050009;
         public static final int binary_file=0x7f050006;
+        public static final int bluetoothToggle=0x7f050021;
         public static final int bt_settings=0x7f05000e;
         public static final int collect_data=0x7f050012;
         public static final int compressed_file=0x7f050007;
@@ -74,51 +78,26 @@ public final class R {
         public static final int load_data=0x7f050013;
         public static final int matlab_file=0x7f050008;
         public static final int menu_settings=0x7f05000a;
-        public static final int plotFFT=0x7f05001d;
+        public static final int plotFFT=0x7f05001f;
         public static final int plot_data=0x7f050016;
-        public static final int pref_default_display_name=0x7f050023;
-        public static final int pref_description_social_recommendations=0x7f050021;
-        /**  Example settings for Data & Sync 
-         */
-        public static final int pref_header_data_sync=0x7f050025;
-        /**  Strings related to Settings 
- Example General settings 
-         */
-        public static final int pref_header_general=0x7f05001f;
-        /**  Example settings for Notifications 
-         */
-        public static final int pref_header_notifications=0x7f050028;
-        public static final int pref_ringtone_silent=0x7f05002b;
-        public static final int pref_title_add_friends_to_messages=0x7f050024;
-        public static final int pref_title_display_name=0x7f050022;
-        public static final int pref_title_new_message_notifications=0x7f050029;
-        public static final int pref_title_ringtone=0x7f05002a;
-        public static final int pref_title_social_recommendations=0x7f050020;
-        public static final int pref_title_sync_frequency=0x7f050026;
-        public static final int pref_title_system_sync_settings=0x7f050027;
-        public static final int pref_title_vibrate=0x7f05002c;
         public static final int range_plot=0x7f050001;
         public static final int raw_plot=0x7f050000;
         public static final int sar_plot=0x7f050004;
         public static final int save_data=0x7f050014;
         public static final int send_to=0x7f05000c;
         public static final int share_data=0x7f050015;
+        public static final int spinner_prompt=0x7f05001e;
+        public static final int spinner_recentDataFiles=0x7f05001d;
         public static final int statistics_log=0x7f050017;
         public static final int text_file=0x7f050005;
         public static final int title_activity_display_archive=0x7f05001b;
-        public static final int title_activity_settings=0x7f05001e;
+        public static final int title_activity_new=0x7f050020;
         public static final int title_item_detail=0x7f050018;
         public static final int title_item_list=0x7f050019;
         public static final int title_main_activity=0x7f05000b;
     }
     public static final class style {
-        public static final int AppTheme=0x7f070000;
-        public static final int styleName=0x7f070001;
-    }
-    public static final class xml {
-        public static final int pref_data_sync=0x7f040000;
-        public static final int pref_general=0x7f040001;
-        public static final int pref_headers=0x7f040002;
-        public static final int pref_notification=0x7f040003;
+        public static final int AppTheme=0x7f060000;
+        public static final int styleName=0x7f060001;
     }
 }
