@@ -82,13 +82,25 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 
 	public void openArchive(View newActivity) {
+		//Log.d("openArchive", "error");
 		Toast.makeText(this, "Selected Load Data", Toast.LENGTH_SHORT).show();
 		Intent archiveData = new Intent(this, DisplayArchive.class);
 		startActivity(archiveData);
 	}
+
+	boolean showNewSeries;
 	
 	public void plotFFT(View fftPlot) {
 		Toast.makeText(this, "Selected Plot FFT", Toast.LENGTH_SHORT).show();
+//		XYSeries seriesA = new XYSeries("new Series");
+		
+	//	mDataset.addSeries(seriesA);
+//		double[] array2= getFftData();
+//		int j=0;
+//		for (j=0; j<4096; j++){
+//			dataSeries2.add(j, array2[j]);
+//		}
+//		mDataset.addSeries(seriesA);
 	}
 
 	// Plotting pop-up menu
@@ -188,8 +200,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 
 	
-//	double[] dataArray;
-	
 	// gets Data from a file in External Storage --> SD Card (?)
 	// NEED TO UPDATE FOR UNIVERSAL DATA FILES 
 	public double[] getDataFromFile() {
@@ -197,15 +207,16 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		// Get the text file
 		// NEED TO SPECIFICALLY CHANGE THIS LINE OF CODE TO BE MORE UNIVERSAL!
-		File file = new File(sdcard, "100MhzRealReturn.txt");
+		File file = new File(sdcard, "3kHz_44KHzFs.txt");
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			int i = 0;
-			dataArray = new double[5288];	//2048
-
-			while ((line = br.readLine()) != null & (i != 5288)) {	//2048
+			dataArray = new double[512];	
+//			dataArray = new double[5288];	//2048
+			
+			while ((line = br.readLine()) != null & (i != 512)) {	//5288
 				dataArray[i] = Float.parseFloat(line);
 				i++;
 			}
@@ -223,31 +234,34 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		
 //		if (mChartView != null) 
 			XYSeries dataSeries = new XYSeries("Simulated Data");	
-			double[] array = new double[5288];	//2048
+			double[] array = new double[512];	//2048 //5288
 			array = getDataFromFile();
 			int i=0;
-			for (i=0; i<5288; i++){				//2048
+			for (i=0; i<512; i++){				//2048 //5288
 				dataSeries.add(i, array[i]);
 			}
 			myData.addSeries(dataSeries);
-//			
-//			XYSeries dataSeries2 = new XYSeries("FFT data");
-//			double[] array2= getFftData();
-//			System.out.print("in getMyData, array2 =" + array2);
-//			int j=0;
-//			for (j=0; j<4096; j++){
-//				dataSeries2.add(j, array2[j]);
-//			}
-//			myData.addSeries(dataSeries2);	
-//		
+
+	//		if 	(showNewSeries = true) { }
+			
+			
+			XYSeries dataSeries2 = new XYSeries("FFT data");
+			double[] array2= getFftData();
+			System.out.print("in getMyData, array2 =" + array2);
+			int j=0;
+			for (j=0; j<512; j++){
+				dataSeries2.add(j, array2[j]);
+			}
+			myData.addSeries(dataSeries2);	
+		
 		return myData;
 	}
 	
 	public double[] getFftData() {
 		
-		double[] fftArray = new double[4096];
+		double[] fftArray = new double[512];
 		
-		calculateFft fftData = new calculateFft(4096);
+		calculateFft fftData = new calculateFft(512);
 		fftArray = fftData.realArray(dataArray);
 		//System.out.println("returned data" + fftData);
 		
@@ -261,10 +275,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		r1.setPointStyle(PointStyle.SQUARE); // CIRCLE, DIAMOND , POINT, TRIANGLE, X									
 		r1.setFillPoints(true); // not for point or x don't know how to set point size or point color
 		
-//		XYSeriesRenderer r2 = new XYSeriesRenderer();
-//		r2.setColor(Color.RED);
-//		r2.setLineWidth(2);
-//		r2.setPointStyle(PointStyle.SQUARE);
+		XYSeriesRenderer r2 = new XYSeriesRenderer();
+		r2.setColor(Color.RED);
+		r2.setLineWidth(2);
+		r2.setPointStyle(PointStyle.SQUARE);
 
 		// r.setFillBelowLine(true); // shows area of curves
 		// r.setFillBelowLineColor(Color.TRANSPARENT); //set color other than
@@ -272,7 +286,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		XYMultipleSeriesRenderer myRenderer = new XYMultipleSeriesRenderer();
 		myRenderer.addSeriesRenderer(r1);
-	//	myRenderer.addSeriesRenderer(r2);
+		myRenderer.addSeriesRenderer(r2);
 		myRenderer.setPanEnabled(true, true);
 		myRenderer.setZoomEnabled(true, false);
 		myRenderer.setZoomButtonsVisible(true);

@@ -104,9 +104,14 @@ public class calculateFft {
 		System.out.println("Before: ");
 		printReIm(re, im);
 		fft.fft(re, im);
+		double[] fftOutput = new double[n];
+		
+		for (int i=0; i<re.length; i++){
+			fftOutput[i] = Math.sqrt(Math.pow(re[i], 2) + Math.pow(im[i], 2)); 
+		}
 		System.out.println("After: ");
 		printReIm(re, im);
-		return re;
+		return fftOutput;
 	}
 
 	protected static void printReIm(double[] re, double[] im) {

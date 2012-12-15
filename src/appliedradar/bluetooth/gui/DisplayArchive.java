@@ -33,6 +33,7 @@ public class DisplayArchive extends Activity {
         s2.setAdapter(adapter);
         s2.setOnItemSelectedListener(
                 new OnItemSelectedListener() {
+                	
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
                         showToast("Spinner2: position=" + position + " id=" + id);
