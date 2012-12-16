@@ -81,15 +81,15 @@ public class calculateFft {
 	}
 
 
-	public double[] realArray(double[] dataArray) {
+	public double[] realArray(double[] dataArray, double[] imaginary) {
 		//int N = 32;
 		calculateFft fft = new calculateFft(n);
 		double[] re = new double[n];
 		double[] im = new double[n];
 
 		for(int i=0; i<n; i++) {
-			re = dataArray;
-			im[i] = 0;
+			re[i] = dataArray[i];
+			im[i] = imaginary[i];
 		}
 	//	System.out.println("in realArray, re=" + re);
 		double[] reArray = new double[n];

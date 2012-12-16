@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
+
 public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 	ShareActionProvider mShareActionProvider;
@@ -226,6 +227,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		catch (IOException e) {
 			Log.e("MainActivity", "IOError");
 		}
+		System.out.println("returned dataArray from sdcard: " + dataArray);
 		return dataArray;	
 	}
 	
@@ -241,7 +243,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 				dataSeries.add(i, array[i]);
 			}
 			myData.addSeries(dataSeries);
-
+			
+			System.out.println("returned dataArray from getMyData: " + dataArray);
 	//		if 	(showNewSeries = true) { }
 			
 			
@@ -258,14 +261,40 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 	
 	public double[] getFftData() {
+
+//		double[] fftArray = new double[512];
+		double[] realArray = dataArray;
+		double[] imagArray = new double[512];
+	
+		FFTcalc fftData = new FFTcalc();
+		double[] fftArray = fftData.fft(realArray,imagArray, true);
+		int n = realArray.length;
+		double[] imagFFT = new double[fftArray.length/2];
+		double[] realFFT = new double[fftArray.length/2];
+		double radice = 1 / Math.sqrt(n);
+//		for(int i=0; i< fftArray.length; i+=2) {
+//			int i2 = i/2;
+//			realFFT[i] = fftArray[i2] / radice;
+//			imagFFT[i] = fftArray[i2 + 1] / radice;
+//		}
 		
-		double[] fftArray = new double[512];
+		for(int i=0; i< fftArray.length; i+=2) {
+			int i2 = i/2;
+			realFFT[i2] = fftArray[i] / radice;
+			imagFFT[i2] = fftArray[i + 1] / radice;
+		}
 		
-		calculateFft fftData = new calculateFft(512);
-		fftArray = fftData.realArray(dataArray);
+		double[] fftOutput = new double[n];
+		for (int i=0; i<n; i++){
+			fftOutput[i] = Math.sqrt(Math.pow(realFFT[i], 2) + Math.pow(imagFFT[i], 2)); 
+		}
+		
+		//fftArray = fftData.realArray(dataArray);
+		//calculateFft fftData = new calculateFft(512);
+		//fftArray = fftData.realArray(realArray, imagArray);
 		//System.out.println("returned data" + fftData);
 		
-		return fftArray;
+		return fftOutput;
 	}
 	
 	public XYMultipleSeriesRenderer getMyRenderer() {
